@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 //CHECKSTYLE.OFF: HideUtilityClassConstructor
 @Configuration
-@ComponentScan(value = {"org.fluentlenium.example.spring"})
+@ComponentScan(value = {"fr.gouv.finances.soda.example.testpic"})
 @PropertySources(@PropertySource("config.properties"))
 @SuppressWarnings("PMD.UseUtilityClass")
 public class Config {
