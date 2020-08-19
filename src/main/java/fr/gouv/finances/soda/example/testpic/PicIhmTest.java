@@ -12,30 +12,36 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import fr.gouv.finances.soda.example.testpic.browser.IBrowser;
-import fr.gouv.finances.soda.example.testpic.config.Config;
 import fr.gouv.finances.soda.example.testpic.config.ConfigException;
 import fr.gouv.finances.soda.example.testpic.config.SeleniumBrowserConfigProperties;
 import io.appium.java_client.AppiumDriver;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = Config.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes=Config.class)
+@ComponentScan(value = {"fr.gouv.finances.soda.example.testpic"})
+@Import(SeleniumBrowserConfigProperties.class)
+//@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = Config.class)
+//@ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public class PicIhmTest extends FluentTest {
 
     private static final Logger log = LoggerFactory.getLogger(PicIhmTest.class);
 
     @Autowired
-    private SeleniumBrowserConfigProperties config;
+    protected SeleniumBrowserConfigProperties config;
 
     @Override
     public WebDriver newWebDriver() {
         if (config.useHub()) {
             // Don't log your Grid url because you may expose your SauceLabs/BrowserStack API key :)
-            log.info("Running test on Grid using {}", getBrowser());
+            //log.info("Running test on Grid using {}", getBrowser());
+            log.info("Running test on Grid {] using {}", getRemoteUrl() ,getBrowser());
             return runRemoteWebDriver();
         } else if (config.isMobileSimulator()) {
             log.info("Running test on Appium server {} using {}", getAppiumServerUrl(), getBrowser());

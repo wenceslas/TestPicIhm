@@ -44,6 +44,7 @@ pipeline {
 	stage('Test état de la PIC ') 	{
 		steps {
 			script {
+			/*
 				def responseSelenium = httpRequest "http://selenium.pic.soda.dgfip/grid/console"
 				println('Status: ' + responseSelenium.status)
 				println('Content: ' + responseSelenium.content)
@@ -51,6 +52,10 @@ pipeline {
 				def responseZAP = httpRequest "http://zap.pic.soda.dgfip"
 				println('Status: ' + responseZAP.status)
 				println('Content: ' + responseZAP.content)
+			*/	
+				def responseCoca = httpRequest "http://coca.appli.dgfip"
+				println('Status: ' + responseCoca.status)
+				println('Content: ' + responseCoca.content)
 			}
 		
 		}
